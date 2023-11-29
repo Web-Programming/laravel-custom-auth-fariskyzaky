@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProdiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,35 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['cek_login:user']], function () {
         Route::resource('user', UserController::class);
     });
+
+
+    // Pertemuan 24
+    Route::get('/prodi/all-join-facade', [ProdiController::class, 'allJoinFacade']);
+    Route::get('/mahasiswa/all-join-elq', [MahasiswaController::class, 'allJoinElq']);
+    Route::get('/prodi/create', [ProdiController::class,'create'])->name('prodi.create');
+    Route::post('prodi/store', [ProdiController::class,'store']);
+
+
+
+    Route::get('/prodi', [
+        ProdiController::class,
+        'index'
+    ])->name('prodi.index');
+    // Menampilkan satu data program studi
+    Route::get('/prodi/{prodi}',
+    [ProdiController::class,
+        'show'
+    ])->name('prodi.show');
+
+
+    // Update(Form Edit)
+    Route::get('/prodi/{prodi}/edit', [ProdiController::class, 'edit'])->name('prodi.edit');
+
+    // Update (Proses Update)
+    Route::patch('/prodi/{prodi}', [ProdiController::class, 'update'])->name('prodi.update');
+
+    // DELETE
+    Route::delete('/prodi/{prodi}', [ProdiController::class, 'destroy'])->name('prodi.destroy');
+
 });
+
