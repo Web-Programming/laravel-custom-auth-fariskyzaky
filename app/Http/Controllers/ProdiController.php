@@ -40,6 +40,8 @@ class ProdiController extends Controller {
         // dump($request);
         // echo $request->nama;
 
+        $this->authorize('create', Prodi::class);
+        
         $validateData = $request->validate([
             'nama'=> 'required|min:5|max:20',
             'foto' => 'required|file|image|max:5000',
@@ -50,7 +52,7 @@ class ProdiController extends Controller {
 
         //Ambil ekstensi file
         $ext = $request->foto->getClientOriginalExtension();
-        //Rename file
+        //Rename nama file
         $nama_file = 'foto-' .time() . "." .$ext;
         $path = $request->foto->storeAs('public',$nama_file);
 
